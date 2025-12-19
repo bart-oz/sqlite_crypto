@@ -17,6 +17,12 @@ module SqliteCrypto
       ActiveRecord::Type.register(:ulid, SqliteCrypto::Type::ULID, adapter: :sqlite3)
     end
 
+    initializer "sqlite_crypto.schema_dumper", after: "active_record.initialize_database" do
+      require "active_record/connection_adapters/sqlite3_adapter"
+      require "sqlite_crypto/schema_dumper"
+      ActiveRecord::ConnectionAdapters::SQLite3::SchemaDumper.prepend(SqliteCrypto::SchemaDumper)
+    end
+
     # Migration helpers (not implemented yet)
     # initializer "sqlite_crypto.migration_helpers" do |app|
     #   ActiveRecord::ConnectionAdapters::Table.include(SqliteCrypto::MigrationHelpers)

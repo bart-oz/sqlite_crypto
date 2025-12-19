@@ -22,5 +22,9 @@ coverage/
 *.swo
 *~
 
+# Ignore temporary files and directories
+tmp/
+*.log
+
 # Ignore key files for decrypting credentials and more.
 /config/*.key
