@@ -1,20 +1,30 @@
 # frozen_string_literal: true
 
+require "sqlite_crypto/type/uuid"
+require "sqlite_crypto/type/ulid"
+
+# These will be required when migration and generators are implemented
+# require "sqlite_crypto/migration_helpers"
+# require "sqlite_crypto/generators/install_generator"
+
 module SqliteCrypto
   class Railtie < ::Rails::Railtie
     # Configuration namespace for users to set options
     config.sqlite_crypto = ActiveSupport::OrderedOptions.new
 
     initializer "sqlite_crypto.register_types" do
-      # Will register custom types with ActiveRecord
+      ActiveRecord::Type.register(:uuid, SqliteCrypto::Type::Uuid, adapter: :sqlite3)
+      ActiveRecord::Type.register(:ulid, SqliteCrypto::Type::ULID, adapter: :sqlite3)
     end
 
-    initializer "sqlite_crypto.migration_helpers" do |app|
-      # Will make migration helpers available
-    end
+    # Migration helpers (not implemented yet)
+    # initializer "sqlite_crypto.migration_helpers" do |app|
+    #   ActiveRecord::ConnectionAdapters::Table.include(SqliteCrypto::MigrationHelpers)
+    # end
 
-    generators do
-      # Will load generators
-    end
+    # Generators (not implemented yet)
+    # generators do
+    #   require "sqlite_crypto/generators/install_generator"
+    # end
   end
 end
