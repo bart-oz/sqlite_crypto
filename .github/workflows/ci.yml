@@ -87,6 +87,26 @@ jobs:
 
       - name: Enforce coverage threshold
         run: |
-          # SimpleCov will exit with status 1 if coverage is below minimum
-          # This is already handled by the rspec run above with minimum_coverage set
-          echo "✅ Coverage threshold met (80%)"
+          # SimpleCov will exit with status 1 if coverage is below minimum (80%)
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Install bundle-audit
+        run: gem install bundler-audit
+
+      - name: Update vulnerability database
+        run: bundle-audit update
+
+      - name: Check for vulnerabilities
+        run: bundle-audit check

@@ -4,11 +4,8 @@ require "simplecov"
 SimpleCov.start do
   add_filter "/spec/"
   track_files "lib/**/*.rb"
-
-  # Temporarily disabled during initial setup
-  # Will enable when real functionality exists
-  # minimum_coverage 80
-  # minimum_coverage_by_file 70
+  minimum_coverage 80
+  minimum_coverage_by_file 70
 end
 
 require "bundler/setup"
