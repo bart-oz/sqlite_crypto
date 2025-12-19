@@ -15,7 +15,12 @@ RSpec.describe SqliteCrypto::SchemaDumper do
     end
 
     stream = StringIO.new
-    ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection_pool, stream)
+    # Rails 7.2+ uses connection_pool, Rails 7.1 uses connection
+    if ActiveRecord.version >= Gem::Version.new("7.2")
+      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection_pool, stream)
+    else
+      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, stream)
+    end
     output = stream.string
 
     expect(output).to include('create_table "users", id: uuid')
