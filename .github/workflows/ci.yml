@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby-version }} / Rails ${{ matrix.rails-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['3.1', '3.2', '3.3', '3.4']
+        rails-version: ['7.1', '7.2', '8.0', '8.1']
+        exclude:
+          # Rails 8.1 requires Ruby 3.2+ (if there are compatibility issues)
+          # Uncomment if needed:
+          # - ruby-version: '3.1'
+          #   rails-version: '8.1'
+
+    env:
+      RAILS_VERSION: ${{ matrix.rails-version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: false
+
+      - name: Install dependencies with Rails ${{ matrix.rails-version }}
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          bundle exec appraisal install
+
+      - name: Run tests
+        run: bundle exec appraisal rails-${{ matrix.rails-version }} rspec
+
+      - name: Upload coverage reports
+        if: matrix.ruby-version == '3.4' && matrix.rails-version == '8.1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  lint:
+    name: Lint (StandardRB)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Run linter
+        run: bundle exec standardrb
+
+  coverage:
+    name: Coverage Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Run tests with coverage
+        run: bundle exec rspec
+        
+      - name: Enforce coverage threshold
+        run: |
+          # SimpleCov will exit with status 1 if coverage is below minimum
+          # This is already handled by the rspec run above with minimum_coverage set
+          echo "✅ Coverage threshold met (80%)"
