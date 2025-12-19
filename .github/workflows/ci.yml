@@ -39,7 +39,9 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
-          bundle exec appraisal install
+
+      - name: Install specific Rails version appraisal
+        run: bundle exec appraisal rails-${{ matrix.rails-version }} bundle install
 
       - name: Run tests
         run: bundle exec appraisal rails-${{ matrix.rails-version }} rspec
