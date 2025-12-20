@@ -33,13 +33,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Migration helpers loading
   - Model extensions loading after database initialization
 - **Testing Infrastructure**:
-  - Comprehensive test suite with 99.01% code coverage (51 examples)
+  - Comprehensive test suite with 99.01% code coverage (58 examples)
   - Unit tests for UUID/ULID types with validation
   - Integration tests for real-world migration scenarios
   - Model extension tests covering generation, validation, and edge cases
+  - Performance benchmarks comparing Integer vs UUID vs ULID
   - Support for Rails 7.1, 7.2, 8.0, and 8.1
   - Security audit with bundle-audit in CI
-- **Documentation**: Branch protection rules and contribution guidelines
+- **Performance Benchmarks**: Comprehensive benchmarking suite
+  - Insert performance comparison
+  - Query performance benchmarks (find, where)
+  - Storage requirement analysis
+  - ID format demonstrations
+  - Use case recommendations with real-world examples
+  - Security implications documentation
+- **Documentation**: Professional README with badges, examples, and benchmarks
+  - 99.01% test coverage badge
+  - Ruby/Rails compatibility matrix
+  - Complete usage examples for all features
+  - Migration guide for existing applications
+  - Benchmark results and recommendations
+  - Security considerations
+  - Branch protection rules and contribution guidelines
 
 ### Changed
 - Improved pluralization handling using Rails' built-in `pluralize` method
