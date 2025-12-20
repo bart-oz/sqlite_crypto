@@ -8,7 +8,28 @@
 
 Seamless UUID and ULID primary key support for Rails with SQLite3.
 
-## Compatibility
+### ID Format Comparison
+
+```
+INTEGER:  1, 2, 3, ... (sequential, guessable)
+UUID:     550e8400-e29b-41d4-a716-446655440000 (random, 36 chars)
+ULID:     01ARZ3NDEKTSV4RRFFQ69G5FAV (time-sortable, 26 chars)
+```
+
+## Why Use UUID/ULID Instead of Integer IDs?
+
+|  | **Integer** | **UUID** | **ULID** |
+|---|-------------|----------|----------|
+| **Performance** | Baseline | +2-5% slower | +5-10% slower |
+| **Storage** | 8 bytes | 36 bytes (4.5x) | 26 bytes (3.2x) |
+| **Security** | Guessable | Random | Random |
+| **Collisions** | ⚠️ High in distributed systems | Virtually impossible | Virtually impossible |
+| **Sortable** | Sequential | Random | Time-based |
+| **Distributed** | Needs coordination | Generate anywhere | Generate anywhere |
+
+**Performance testing**: Run `bundle exec rspec --tag performance` to benchmark on your hardware. Specs test scaling from 100 → 10,000 records across inserts, queries, updates, and deletes.
+
+## Gem Compatibility
 
 | Ruby Version | Rails 7.1 | Rails 7.2 | Rails 8.0 | Rails 8.1 |
 |--------------|-----------|-----------|-----------|-----------|
@@ -23,13 +44,13 @@ Seamless UUID and ULID primary key support for Rails with SQLite3.
 
 ## Features
 
-✅ UUID primary keys with automatic validation
-✅ ULID primary keys with time-sortable validation
-✅ Migration DSL helpers (`t.uuid`, `t.ulid`)
-✅ Automatic foreign key type detection
-✅ Model extensions for UUID/ULID generation
-✅ Clean schema.rb output
-✅ Zero configuration required
+* UUID primary keys with automatic validation
+* ULID primary keys with time-sortable validation
+* Migration DSL helpers (`t.uuid`, `t.ulid`)
+* Automatic foreign key type detection
+* Model extensions for UUID/ULID generation
+* Clean schema.rb output
+* Zero configuration required
 
 ## Installation
 
