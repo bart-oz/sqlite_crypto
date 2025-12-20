@@ -23,9 +23,8 @@ module SqliteCrypto
       require "sqlite_crypto/migration_helpers"
     end
 
-    # Generators (not implemented yet)
-    # generators do
-    #   require "sqlite_crypto/generators/install_generator"
-    # end
+    initializer "sqlite_crypto.model_extensions", after: "active_record.initialize_database" do
+      require "sqlite_crypto/model_extensions"
+    end
   end
 end

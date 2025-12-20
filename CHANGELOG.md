@@ -21,14 +21,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Outputs `id: :uuid` instead of `id: { type: :string, limit: 36 }`
   - Outputs `id: :ulid` instead of `id: { type: :string, limit: 26 }`
   - Preserves standard integer primary keys unchanged
+- **Model Extensions**: ActiveRecord class methods for automatic UUID/ULID generation
+  - `generates_uuid(attribute, unique: false)` - Auto-generates SecureRandom.uuid on create
+  - `generates_ulid(attribute, unique: false)` - Auto-generates time-sortable ULID on create
+  - Optional uniqueness validation with `unique: true` parameter
+  - Preserves existing values (uses `||=` to avoid overwriting)
+  - Available to all ActiveRecord models via concern
 - **Rails Integration**: Full Railtie implementation
   - Type registration for SQLite3 adapter
   - Schema dumper prepending with proper load order
   - Migration helpers loading
+  - Model extensions loading after database initialization
 - **Testing Infrastructure**:
-  - Comprehensive test suite with code coverage above 80%
+  - Comprehensive test suite with 99.01% code coverage (51 examples)
   - Unit tests for UUID/ULID types with validation
   - Integration tests for real-world migration scenarios
+  - Model extension tests covering generation, validation, and edge cases
   - Support for Rails 7.1, 7.2, 8.0, and 8.1
   - Security audit with bundle-audit in CI
 - **Documentation**: Branch protection rules and contribution guidelines
