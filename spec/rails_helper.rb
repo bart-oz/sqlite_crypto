@@ -29,6 +29,7 @@ end
 
 # Load gem before Rails initializes
 require_relative "../lib/sqlite_crypto"
+require_relative "../lib/sqlite_crypto/migration_helpers"
 
 # Initialize Rails and establish database connection
 Dummy::Application.initialize!

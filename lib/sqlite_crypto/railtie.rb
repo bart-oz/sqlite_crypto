@@ -3,10 +3,6 @@
 require "sqlite_crypto/type/uuid"
 require "sqlite_crypto/type/ulid"
 
-# These will be required when migration and generators are implemented
-# require "sqlite_crypto/migration_helpers"
-# require "sqlite_crypto/generators/install_generator"
-
 module SqliteCrypto
   class Railtie < ::Rails::Railtie
     # Configuration namespace for users to set options
@@ -23,10 +19,9 @@ module SqliteCrypto
       ActiveRecord::ConnectionAdapters::SQLite3::SchemaDumper.prepend(SqliteCrypto::SchemaDumper)
     end
 
-    # Migration helpers (not implemented yet)
-    # initializer "sqlite_crypto.migration_helpers" do |app|
-    #   ActiveRecord::ConnectionAdapters::Table.include(SqliteCrypto::MigrationHelpers)
-    # end
+    initializer "sqlite_crypto.migration_helpers", after: "active_record.initialize_database" do
+      require "sqlite_crypto/migration_helpers"
+    end
 
     # Generators (not implemented yet)
     # generators do
