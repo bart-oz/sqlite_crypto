@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateExampleSchema < ActiveRecord::Migration[8.1]
+class CreateExampleSchema < ActiveRecord::Migration[ActiveRecord::Migration.current_version]
   def change
     create_table :users, id: false do |t|
       t.uuid :id, primary_key: true
