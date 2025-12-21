@@ -2,6 +2,7 @@
 
 require "sqlite_crypto/type/uuid"
 require "sqlite_crypto/type/ulid"
+require "sqlite_crypto/sqlite3_adapter_extension"
 
 module SqliteCrypto
   class Railtie < ::Rails::Railtie
@@ -11,6 +12,11 @@ module SqliteCrypto
     initializer "sqlite_crypto.register_types" do
       ActiveRecord::Type.register(:uuid, SqliteCrypto::Type::Uuid, adapter: :sqlite3)
       ActiveRecord::Type.register(:ulid, SqliteCrypto::Type::ULID, adapter: :sqlite3)
+    end
+
+    initializer "sqlite_crypto.native_types" do
+      require "active_record/connection_adapters/sqlite3_adapter"
+      ActiveRecord::ConnectionAdapters::SQLite3Adapter.prepend(SqliteCrypto::Sqlite3AdapterExtension)
     end
 
     initializer "sqlite_crypto.schema_dumper", after: "active_record.initialize_database" do

@@ -19,9 +19,11 @@ RSpec.describe "Migration Helpers" do
       external_col = connection.columns(:users).find { |c| c.name == "external_id" }
       tracking_col = connection.columns(:users).find { |c| c.name == "tracking_id" }
 
-      expect(external_col.sql_type).to eq("uuid")
+      expect(external_col.sql_type).to eq("varchar(36)")
+      expect(external_col.limit).to eq(36)
       expect(external_col.null).to be false
-      expect(tracking_col.sql_type).to eq("ulid")
+      expect(tracking_col.sql_type).to eq("varchar(26)")
+      expect(tracking_col.limit).to eq(26)
       expect(tracking_col.null).to be true
     end
 
@@ -32,8 +34,8 @@ RSpec.describe "Migration Helpers" do
         t.ulid :tracking_id
       end
 
-      expect(connection.columns(:users).find { |c| c.name == "external_id" }.sql_type).to eq("uuid")
-      expect(connection.columns(:users).find { |c| c.name == "tracking_id" }.sql_type).to eq("ulid")
+      expect(connection.columns(:users).find { |c| c.name == "external_id" }.sql_type).to eq("varchar(36)")
+      expect(connection.columns(:users).find { |c| c.name == "tracking_id" }.sql_type).to eq("varchar(26)")
     end
   end
 
