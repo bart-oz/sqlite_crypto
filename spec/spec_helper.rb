@@ -5,6 +5,7 @@ SimpleCov.start do
   add_filter "/spec/"
   add_filter "/lib/sqlite_crypto/version.rb"
   add_filter "/lib/sqlite_crypto/railtie.rb"
+  add_filter "/lib/sqlite_crypto/schema_definitions.rb"
   track_files "lib/**/*.rb"
   minimum_coverage 80
   minimum_coverage_by_file 70
