@@ -1,9 +1,9 @@
 # SQLite crypto
 
-[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/bart-oz/sqlite_crypto/releases)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/bart-oz/sqlite_crypto/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)
-[![Coverage](https://img.shields.io/badge/coverage-99.01%25-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)
+[![Coverage](https://img.shields.io/badge/coverage-99.06%25-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://github.com/bart-oz/sqlite_crypto)
 
 Seamless UUID and ULID primary key support for Rails with SQLite3.
