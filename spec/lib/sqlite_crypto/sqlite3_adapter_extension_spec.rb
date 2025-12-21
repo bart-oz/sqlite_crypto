@@ -7,16 +7,16 @@ RSpec.describe "SQLite3 Adapter Extension" do
 
   describe "#native_database_types" do
     it "includes uuid type with varchar(36)" do
-      expect(adapter.native_database_types[:uuid]).to eq({ name: "varchar", limit: 36 })
+      expect(adapter.native_database_types[:uuid]).to eq({name: "varchar", limit: 36})
     end
 
     it "includes ulid type with varchar(26)" do
-      expect(adapter.native_database_types[:ulid]).to eq({ name: "varchar", limit: 26 })
+      expect(adapter.native_database_types[:ulid]).to eq({name: "varchar", limit: 26})
     end
 
     it "preserves default SQLite types" do
-      expect(adapter.native_database_types[:string]).to eq({ name: "varchar" })
-      expect(adapter.native_database_types[:integer]).to eq({ name: "integer" })
+      expect(adapter.native_database_types[:string]).to eq({name: "varchar"})
+      expect(adapter.native_database_types[:integer]).to eq({name: "integer"})
     end
   end
 
