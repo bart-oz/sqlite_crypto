@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-12-21
+
+### Fixed
+- **Native Database Types**: Added `native_database_types` registration for `:uuid` and `:ulid`
+  - UUID columns now correctly create `varchar(36)` in migrations instead of literal `uuid` type
+  - ULID columns now correctly create `varchar(26)` in migrations instead of literal `ulid` type
+  - Schema dumper now works properly without "Unknown type" errors
+  - Fixes compatibility issue discovered during real-world usage
+
 ## [1.0.0] - 2025-12-20
 
 ### Added

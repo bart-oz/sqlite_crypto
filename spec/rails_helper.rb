@@ -31,10 +31,14 @@ end
 require_relative "../lib/sqlite_crypto"
 require_relative "../lib/sqlite_crypto/migration_helpers"
 require_relative "../lib/sqlite_crypto/model_extensions"
+require_relative "../lib/sqlite_crypto/sqlite3_adapter_extension"
 
 # Initialize Rails and establish database connection
 Dummy::Application.initialize!
 ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
+
+# Manually prepend extension for tests (railtie does this in real apps)
+ActiveRecord::ConnectionAdapters::SQLite3Adapter.prepend(SqliteCrypto::Sqlite3AdapterExtension)
 
 # Helper to create test tables
 def create_test_table(table_name = "users", &block)

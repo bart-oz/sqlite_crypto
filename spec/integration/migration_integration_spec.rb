@@ -21,10 +21,10 @@ RSpec.describe "Migration Integration" do
     expect { migration.migrate(:up) }.not_to raise_error
 
     users_id = connection.columns(:users).find { |c| c.name == "id" }
-    expect(users_id.sql_type).to eq("uuid")
+    expect(users_id.sql_type).to eq("varchar(36)")
 
     categories_id = connection.columns(:categories).find { |c| c.name == "id" }
-    expect(categories_id.sql_type).to eq("ulid")
+    expect(categories_id.sql_type).to eq("varchar(26)")
 
     posts_user_id = connection.columns(:posts).find { |c| c.name == "user_id" }
     expect(posts_user_id.sql_type).to eq("varchar(36)")
@@ -39,7 +39,7 @@ RSpec.describe "Migration Integration" do
     expect(taggings_post_id.sql_type).to eq("INTEGER")
 
     posts_external_ref = connection.columns(:posts).find { |c| c.name == "external_reference" }
-    expect(posts_external_ref.sql_type).to eq("uuid")
+    expect(posts_external_ref.sql_type).to eq("varchar(36)")
   end
 
   it "allows inserting real data with UUID/ULID types" do
