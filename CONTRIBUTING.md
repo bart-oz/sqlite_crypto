@@ -66,7 +66,7 @@ Then open a Pull Request on GitHub against the `main` branch.
 ## What Happens After You Open a PR
 
 1. **Automated CI runs** - Your PR will be tested against:
-   - Ruby 3.1, 3.2, 3.3, and 3.4
+   - Ruby 3.1, 3.2, 3.3, 3.4 and 4.0
    - Rails 7.1, 7.2, 8.0, and 8.1
    - StandardRB linting
    - Security vulnerability audit
