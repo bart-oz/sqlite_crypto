@@ -6,7 +6,7 @@ RSpec.describe SqliteCrypto do
   describe "version" do
     it "has a version number" do
       expect(SqliteCrypto::VERSION).not_to be_nil
-      expect(SqliteCrypto::VERSION).to eq("1.0.2")
+      expect(SqliteCrypto::VERSION).to eq("1.0.3")
     end
   end
 
