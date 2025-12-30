@@ -20,13 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= #{SqliteCrypto::RAILS_MINIMUM_VERSION}"
   spec.add_dependency "sqlite3", ">= 1.6.0"
   spec.add_dependency "ulid", "~> 1.0"
-
-  spec.add_development_dependency "bundler", ">= 2.0"
-  spec.add_development_dependency "rake", ">= 12.0"
-  spec.add_development_dependency "rspec-rails", "~> 6.0"
-  spec.add_development_dependency "simplecov", "~> 0.22"
-  spec.add_development_dependency "sqlite3", ">= 1.6.0"
-  spec.add_development_dependency "standard", "~> 1.30"
-  spec.add_development_dependency "appraisal", "~> 2.5"
   spec.metadata["rubygems_mfa_required"] = "true"
 end
