@@ -5,7 +5,6 @@ source "https://rubygems.org"
 gemspec
 
 group :development do
-  gem "bundler", ">= 2.7.2"
   gem "rake", "~> 13.3.1"
   gem "standard", "~> 1.52.0"
   gem "standard-performance", "~> 1.9.0"

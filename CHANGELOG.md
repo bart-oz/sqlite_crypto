@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Ruby 4.0.0 Support**: Added compatibility with Ruby 4.0.0 released on December 25, 2025
   - Added `benchmark` gem as test dependency (removed from Ruby 4.0.0 stdlib)
-  - Updated Bundler version constraint to support Bundler 4.x (`>= 2.7.2`)
   - Reorganized gemspec to include only runtime dependencies
   - Moved development and test dependencies to Gemfile
 
