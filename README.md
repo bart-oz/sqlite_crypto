@@ -37,6 +37,7 @@ ULID:     01ARZ3NDEKTSV4RRFFQ69G5FAV (time-sortable, 26 chars)
 | 3.2          | ✅        | ✅        | ✅        | ✅        |
 | 3.3          | ✅        | ✅        | ✅        | ✅        |
 | 3.4          | ✅        | ✅        | ✅        | ✅        |
+| 4.0          | ✅        | ✅        | ✅        | ✅        |
 
 **Recommended**: Ruby 3.3+ with Rails 8.0+
 
