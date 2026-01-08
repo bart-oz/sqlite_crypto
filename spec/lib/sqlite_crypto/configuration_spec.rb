@@ -6,8 +6,9 @@ RSpec.describe SqliteCrypto::Configuration do
   subject(:config) { described_class.new }
 
   describe "#uuid_version" do
-    it "defaults to :v7" do
-      expect(config.uuid_version).to eq(:v7)
+    it "defaults based on Ruby version" do
+      expected_default = SqliteCrypto::Generators::Uuid.v7_available? ? :v7 : :v4
+      expect(config.uuid_version).to eq(expected_default)
     end
 
     it "can be set to :v4" do

@@ -58,9 +58,10 @@ RSpec.describe SqliteCrypto do
     end
 
     it "resets uuid_version to default" do
+      original_default = SqliteCrypto::Generators::Uuid.v7_available? ? :v7 : :v4
       described_class.config.uuid_version = :v4
       described_class.reset_configuration!
-      expect(described_class.config.uuid_version).to eq(:v7)
+      expect(described_class.config.uuid_version).to eq(original_default)
     end
   end
 

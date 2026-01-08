@@ -34,8 +34,9 @@ module SqliteCrypto
           if v7_available?
             SecureRandom.uuid_v7
           else
-            raise "UUID v7 generation requires Ruby #{MINIMUM_RUBY_FOR_V7} or later" \
-            "Use config.uuid_version = :v4 or upgrade Ruby."
+            raise ArgumentError, "UUIDv7 requires Ruby 3.3+. " \
+                                 "Current: Ruby #{RUBY_VERSION}. " \
+                                 "Use config.uuid_version = :v4 or upgrade Ruby."
           end
         end
       end
