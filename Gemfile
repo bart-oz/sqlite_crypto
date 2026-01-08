@@ -18,4 +18,5 @@ group :test do
   gem "rspec-rails", "~> 6.0.0"
   gem "simplecov", "~> 0.22.0", require: false
   gem "benchmark", "~> 0.5.0" # Required in Ruby 4.0.0+ (removed from stdlib)
+  gem "generator_spec", "~> 0.10.0"
 end
