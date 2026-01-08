@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-01-08
+
+### Added
+- **UUIDv7 Support**: Time-sortable UUIDs with better database index performance
+  - New configuration option: `config.uuid_version = :v7` (default) or `:v4`
+  - Run `rails generate sqlite_crypto:install` to create initializer
+  - UUIDv7 requires Ruby 3.3+ (graceful error on older versions)
+  - `generates_uuid` now respects the configured version
+- **Configuration System**: `SqliteCrypto.configure` block for gem settings
+- **Install Generator**: `rails generate sqlite_crypto:install` creates initializer
+- **Version Detection**: `SqliteCrypto::Generators::Uuid.v7_available?` helper
+
+### Changed
+- **Default UUID version changed to v7** for new projects (better performance)
+- `generates_uuid` now uses centralized generator instead of direct `SecureRandom.uuid`
+
+### Notes
+- **Ruby 3.1/3.2 users**: Set `config.uuid_version = :v4` in initializer
+- No schema changes required - UUIDv4 and v7 are storage-compatible
+- Existing v4 UUIDs work alongside new v7 UUIDs in same table
+
 ## [1.0.3] - 2025-12-30
 
 ### Added

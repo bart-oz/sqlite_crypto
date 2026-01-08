@@ -50,6 +50,34 @@ RSpec.describe SqliteCrypto::ModelExtensions do
     end
   end
 
+  describe ".generates_uuid with configuration" do
+    after { SqliteCrypto.reset_configuration! }
+
+    context "when configured for v4" do
+      before do
+        SqliteCrypto.config.uuid_version = :v4
+        TestUser.generates_uuid :token
+      end
+
+      it "generates UUIDv4" do
+        user = TestUser.create!(name: "Alice")
+        expect(user.token[14]).to eq("4")
+      end
+    end
+
+    context "when configured for v7", if: SqliteCrypto::Generators::Uuid.v7_available? do
+      before do
+        SqliteCrypto.config.uuid_version = :v7
+        TestUser.generates_uuid :token
+      end
+
+      it "generates UUIDv7" do
+        user = TestUser.create!(name: "Alice")
+        expect(user.token[14]).to eq("7")
+      end
+    end
+  end
+
   describe ".generates_ulid" do
     before { TestUser.generates_ulid :reference }
 

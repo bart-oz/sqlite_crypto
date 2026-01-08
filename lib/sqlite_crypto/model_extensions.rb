@@ -9,7 +9,7 @@ module SqliteCrypto
     module ClassMethods
       def generates_uuid(attribute, unique: false)
         before_create do
-          self[attribute] ||= SecureRandom.uuid
+          self[attribute] ||= SqliteCrypto::Generators::Uuid.generate
         end
 
         validates attribute, uniqueness: true if unique
