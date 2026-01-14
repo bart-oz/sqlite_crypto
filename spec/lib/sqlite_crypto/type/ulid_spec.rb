@@ -46,6 +46,21 @@ RSpec.describe SqliteCrypto::Type::ULID do
         expect { type.cast(invalid) }.to raise_error(ArgumentError, /Invalid ULID/)
       end
     end
+
+    it "rejects multiline strings with embedded newlines (security)" do
+      malicious = "01ARZ3NDEKTSV4RRFFQ69G5FAV\n<script>alert('xss')</script>"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid ULID/)
+    end
+
+    it "rejects ULIDs with leading content" do
+      malicious = "prefix-01ARZ3NDEKTSV4RRFFQ69G5FAV"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid ULID/)
+    end
+
+    it "rejects ULIDs with trailing content" do
+      malicious = "01ARZ3NDEKTSV4RRFFQ69G5FAV-suffix"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid ULID/)
+    end
   end
 
   describe "#serialize and #deserialize" do

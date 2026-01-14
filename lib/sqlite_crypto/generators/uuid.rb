@@ -6,7 +6,7 @@ module SqliteCrypto
   module Generators
     class Uuid
       MINIMUM_RUBY_FOR_V7 = Gem::Version.new("3.3.0")
-      CURRENT_RUBY = Gem::Version.new(RUBY_VERSION)
+      V7_AVAILABLE = (Gem::Version.new(RUBY_VERSION) >= MINIMUM_RUBY_FOR_V7)
 
       class << self
         def generate(version: SqliteCrypto.config.uuid_version)
@@ -21,7 +21,7 @@ module SqliteCrypto
         end
 
         def v7_available?
-          CURRENT_RUBY >= MINIMUM_RUBY_FOR_V7
+          V7_AVAILABLE
         end
 
         private

@@ -6,7 +6,7 @@ RSpec.describe SqliteCrypto do
   describe "version" do
     it "has a version number" do
       expect(SqliteCrypto::VERSION).not_to be_nil
-      expect(SqliteCrypto::VERSION).to eq("2.0.0")
+      expect(SqliteCrypto::VERSION).to eq("2.0.1")
     end
   end
 
@@ -68,12 +68,6 @@ RSpec.describe SqliteCrypto do
   describe "initialization" do
     it "loads successfully" do
       expect(defined?(SqliteCrypto)).to eq("constant")
-    end
-  end
-
-  describe ".load_extensions" do
-    it "responds to load_extensions" do
-      expect(SqliteCrypto).to respond_to(:load_extensions)
     end
   end
 end

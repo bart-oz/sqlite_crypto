@@ -13,5 +13,7 @@ module SqliteCrypto
   end
 end
 
-# Extend the main object context for schema.rb loading
-Object.include(SqliteCrypto::SchemaDefinitions)
+# Extend ActiveRecord::Schema context for schema.rb loading (not global Object)
+if defined?(ActiveRecord::Schema)
+  ActiveRecord::Schema.include(SqliteCrypto::SchemaDefinitions)
+end

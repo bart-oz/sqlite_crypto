@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-01-14
+
+### Security
+- **CRITICAL:**
+  - Fixed regex anchor vulnerability in UUID/ULID validators
+  - Fixed action_text-trix XSS vulnerability by updating the version to '>= 2.1.16'
+
+### Changed
+- **Eager configuration validation**: Setting `uuid_version = :v7` on Ruby < 3.3 now fails at boot time with clear error message instead of runtime failure
+- **Namespace cleanup**: `uuid` and `ulid` schema helpers now scoped to `ActiveRecord::Schema` instead of global `Object`
+- **Performance**: Cached Ruby version check in `V7_AVAILABLE` constant (eliminates repeated `Gem::Version` comparisons)
+- **Boot time**: Added lazy loading with `ActiveSupport.on_load(:active_record)` hook for faster Rails initialization
+- **Migration performance**: Memoized primary key type detection to avoid redundant database queries
+
+### Removed
+- Unused `SqliteCrypto::Error` class
+- Unused `SqliteCrypto.load_extensions` placeholder method
+
+### Internal
+- Simplified configuration defaults to reuse `Generators::Uuid.v7_available?` logic
+- Improved code organization and removed dead code
+
 ## [2.0.0] - 2026-01-08
 
 ### Added
