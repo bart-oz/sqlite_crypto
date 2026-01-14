@@ -16,9 +16,33 @@ RSpec.describe SqliteCrypto::Configuration do
       expect(config.uuid_version).to eq(:v4)
     end
 
-    it "can be set to :v7 explicitly" do
-      config.uuid_version = :v7
-      expect(config.uuid_version).to eq(:v7)
+    context "when setting :v7" do
+      it "accepts :v7 on Ruby 3.3+" do
+        skip "Only testable on Ruby 3.3+" unless SqliteCrypto::Generators::Uuid.v7_available?
+
+        config.uuid_version = :v7
+        expect(config.uuid_version).to eq(:v7)
+      end
+
+      it "raises ArgumentError on Ruby < 3.3" do
+        skip "Only testable on Ruby < 3.3" if SqliteCrypto::Generators::Uuid.v7_available?
+
+        expect {
+          config.uuid_version = :v7
+        }.to raise_error(ArgumentError, /UUIDv7 requires Ruby 3.3/)
+      end
+    end
+
+    it "raises ArgumentError for invalid versions" do
+      expect {
+        config.uuid_version = :v5
+      }.to raise_error(ArgumentError, /Invalid UUID version: v5/)
+    end
+
+    it "raises ArgumentError for non-symbol versions" do
+      expect {
+        config.uuid_version = "v4"
+      }.to raise_error(ArgumentError, /Invalid UUID version: v4/)
     end
   end
 end

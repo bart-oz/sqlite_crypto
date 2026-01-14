@@ -10,13 +10,17 @@ module SqliteCrypto
     config.sqlite_crypto = ActiveSupport::OrderedOptions.new
 
     initializer "sqlite_crypto.register_types" do
-      ActiveRecord::Type.register(:uuid, SqliteCrypto::Type::Uuid, adapter: :sqlite3)
-      ActiveRecord::Type.register(:ulid, SqliteCrypto::Type::ULID, adapter: :sqlite3)
+      ActiveSupport.on_load(:active_record) do
+        ActiveRecord::Type.register(:uuid, SqliteCrypto::Type::Uuid, adapter: :sqlite3)
+        ActiveRecord::Type.register(:ulid, SqliteCrypto::Type::ULID, adapter: :sqlite3)
+      end
     end
 
     initializer "sqlite_crypto.native_types" do
-      require "active_record/connection_adapters/sqlite3_adapter"
-      ActiveRecord::ConnectionAdapters::SQLite3Adapter.prepend(SqliteCrypto::Sqlite3AdapterExtension)
+      ActiveSupport.on_load(:active_record) do
+        require "active_record/connection_adapters/sqlite3_adapter"
+        ActiveRecord::ConnectionAdapters::SQLite3Adapter.prepend(SqliteCrypto::Sqlite3AdapterExtension)
+      end
     end
 
     initializer "sqlite_crypto.schema_dumper", after: "active_record.initialize_database" do

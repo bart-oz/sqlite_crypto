@@ -39,6 +39,21 @@ RSpec.describe SqliteCrypto::Type::Uuid do
         expect { type.cast(invalid) }.to raise_error(ArgumentError, /Invalid UUID/)
       end
     end
+
+    it "rejects multiline strings with embedded newlines (security)" do
+      malicious = "550e8400-e29b-41d4-a716-446655440000\n<script>alert('xss')</script>"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid UUID/)
+    end
+
+    it "rejects UUIDs with leading content" do
+      malicious = "prefix-550e8400-e29b-41d4-a716-446655440000"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid UUID/)
+    end
+
+    it "rejects UUIDs with trailing content" do
+      malicious = "550e8400-e29b-41d4-a716-446655440000-suffix"
+      expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid UUID/)
+    end
   end
 
   describe "#serialize and #deserialize" do

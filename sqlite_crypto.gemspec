@@ -9,8 +9,9 @@ Gem::Specification.new do |spec|
   spec.email = ["bartek.ozdoba@gmail.com"]
   spec.homepage = "https://github.com/bart-oz/sqlite_crypto"
   spec.license = "MIT"
-  spec.summary = "Seamless UUID/ULID support for Rails 8 with SQLite"
-  spec.description = "A lightweight, modular gem providing transparent UUID/ULID primary key configuration for Rails applications using SQLite."
+  spec.summary = "UUID (v4/v7) and ULID primary keys for Rails + SQLite3"
+  spec.description = "UUID and ULID primary key support for Rails with SQLite3. Provides automatic type registration, validation, foreign key detection, and clean schema generation. Supports UUIDv4 (random), UUIDv7 (time-ordered), and ULID (compact, time-sortable) with zero external dependencies."
+
   spec.files = Dir["lib/**/*", "README.md", "LICENSE.txt", "CHANGELOG.md", "bin/*"]
   spec.require_paths = ["lib"]
   spec.bindir = "bin"

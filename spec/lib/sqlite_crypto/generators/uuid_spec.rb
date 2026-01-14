@@ -65,13 +65,17 @@ RSpec.describe SqliteCrypto::Generators::Uuid do
       expect(described_class.v7_available?).to eq(true).or eq(false)
     end
 
-    it "returns true for Ruby 3.3+" do
-      stub_const("SqliteCrypto::Generators::Uuid::CURRENT_RUBY", Gem::Version.new("3.3.0"))
+    it "returns cached value from V7_AVAILABLE constant" do
+      expect(described_class.v7_available?).to eq(SqliteCrypto::Generators::Uuid::V7_AVAILABLE)
+    end
+
+    it "returns true on Ruby 3.3+" do
+      skip "Only testable on Ruby 3.3+" unless Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0")
       expect(described_class.v7_available?).to be true
     end
 
-    it "returns false for Ruby < 3.3" do
-      stub_const("SqliteCrypto::Generators::Uuid::CURRENT_RUBY", Gem::Version.new("3.2.0"))
+    it "returns false on Ruby < 3.3" do
+      skip "Only testable on Ruby < 3.3" if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0")
       expect(described_class.v7_available?).to be false
     end
   end

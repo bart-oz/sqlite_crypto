@@ -32,6 +32,11 @@ module SqliteCrypto
       private
 
       def detect_primary_key_type(table_name)
+        @pk_type_cache ||= {}
+        @pk_type_cache[table_name] ||= fetch_primary_key_type(table_name)
+      end
+
+      def fetch_primary_key_type(table_name)
         conn = @conn || @base || (respond_to?(:connection) ? connection : nil)
         return nil unless conn&.table_exists?(table_name)
 

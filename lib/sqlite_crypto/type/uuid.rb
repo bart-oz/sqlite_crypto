@@ -5,6 +5,8 @@ require "sqlite_crypto/type/base"
 module SqliteCrypto
   module Type
     class Uuid < Base
+      UUID_PATTERN = /\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i
+
       def type
         :uuid
       end
@@ -12,7 +14,7 @@ module SqliteCrypto
       private
 
       def valid?(value)
-        value.match?(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)
+        UUID_PATTERN.match?(value)
       end
     end
   end
