@@ -17,3 +17,8 @@ end
 if defined?(ActiveRecord::Schema)
   ActiveRecord::Schema.include(SqliteCrypto::SchemaDefinitions)
 end
+
+# For Rails 8+, also include in Schema::Definition where the block is evaluated
+if defined?(ActiveRecord::Schema::Definition)
+  ActiveRecord::Schema::Definition.include(SqliteCrypto::SchemaDefinitions)
+end
