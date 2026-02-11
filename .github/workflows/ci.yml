@@ -35,6 +35,9 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: false
 
+      - name: Fix gem directory permissions
+        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
+
       - name: Install dependencies with Rails ${{ matrix.rails-version }}
         run: |
           gem install bundler
@@ -64,7 +67,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Fix gem directory permissions
+        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
+
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
 
       - name: Run linter
         run: bundle exec standardrb
@@ -80,7 +89,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Fix gem directory permissions
+        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
+
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
 
       - name: Run tests with coverage
         run: bundle exec rspec
@@ -100,7 +115,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Fix gem directory permissions
+        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
+
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
 
       - name: Install bundle-audit
         run: gem install bundler-audit

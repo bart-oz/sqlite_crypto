@@ -1,6 +1,6 @@
 # SQLite Crypto
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/bart-oz/sqlite_crypto/releases)
+[![Version](https://img.shields.io/badge/version-2.0.2-blue.svg)](https://github.com/bart-oz/sqlite_crypto/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![types supported](https://img.shields.io/badge/types-ULID,_UUIDv7/v4-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)

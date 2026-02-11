@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2026-02-11
+
+### Fixed
+- **Generator autodiscovery**: Moved install generator to `lib/generators/sqlite_crypto/install/` to follow Rails convention. Previously `rails generate sqlite_crypto:install` could not find the generator (bug since v2.0.0)
+- **Schema loading**: Moved `uuid`/`ulid` helper includes from require-time into railtie initializer. The previous `if defined?` guard ran before ActiveRecord was loaded, causing `NameError: undefined method 'uuid'` when loading schema.rb (bug since v2.0.1)
+- **Rails 8+ compatibility**: Include schema helpers into `ActiveRecord::Schema::Definition` where schema.rb blocks are evaluated in Rails 8+
+
+### Added
+- Schema round-trip integration test (dump, reload, verify)
+
+### Acknowledgements
+- Thanks to [@yostinso](https://github.com/yostinso) for identifying both issues in [#17](https://github.com/bart-oz/sqlite_crypto/pull/17)
+
 ## [2.0.1] - 2026-01-14
 
 ### Security
