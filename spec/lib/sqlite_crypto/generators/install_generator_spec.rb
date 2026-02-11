@@ -2,7 +2,7 @@
 
 require "rails_helper"
 require "generator_spec"
-require "sqlite_crypto/generators/install_generator"
+require "generators/sqlite_crypto/install/install_generator"
 
 RSpec.describe SqliteCrypto::Generators::InstallGenerator, type: :generator do
   destination File.expand_path("../../../../../tmp/generator_test", __dir__)

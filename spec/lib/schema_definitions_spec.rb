@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe SqliteCrypto::SchemaDefinitions do
   describe "namespace scoping" do
@@ -32,6 +32,19 @@ RSpec.describe SqliteCrypto::SchemaDefinitions do
       end
 
       expect(test_class.new.ulid).to eq(:ulid)
+    end
+
+    it "is included in ActiveRecord::Schema" do
+      schema = ActiveRecord::Schema.new
+      expect(schema.respond_to?(:uuid)).to be true
+      expect(schema.respond_to?(:ulid)).to be true
+    end
+
+    if defined?(ActiveRecord::Schema::Definition)
+      it "is included in ActiveRecord::Schema::Definition (Rails 8+)" do
+        expect(ActiveRecord::Schema::Definition.instance_methods).to include(:uuid)
+        expect(ActiveRecord::Schema::Definition.instance_methods).to include(:ulid)
+      end
     end
   end
 end

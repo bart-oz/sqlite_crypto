@@ -29,6 +29,16 @@ module SqliteCrypto
       ActiveRecord::ConnectionAdapters::SQLite3::SchemaDumper.prepend(SqliteCrypto::SchemaDumper)
     end
 
+    initializer "sqlite_crypto.schema_definitions", after: "active_record.initialize_database" do
+      require "sqlite_crypto/schema_definitions"
+      ActiveRecord::Schema.include(SqliteCrypto::SchemaDefinitions)
+
+      # Rails 8+: schema.rb block is evaluated in Schema::Definition context
+      if defined?(ActiveRecord::Schema::Definition)
+        ActiveRecord::Schema::Definition.include(SqliteCrypto::SchemaDefinitions)
+      end
+    end
+
     initializer "sqlite_crypto.migration_helpers", after: "active_record.initialize_database" do
       require "sqlite_crypto/migration_helpers"
     end

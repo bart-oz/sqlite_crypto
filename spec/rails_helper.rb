@@ -37,8 +37,12 @@ require_relative "../lib/sqlite_crypto/sqlite3_adapter_extension"
 Dummy::Application.initialize!
 ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
 
-# Manually prepend extension for tests (railtie does this in real apps)
+# Manually prepend/include extensions for tests (railtie does this in real apps)
 ActiveRecord::ConnectionAdapters::SQLite3Adapter.prepend(SqliteCrypto::Sqlite3AdapterExtension)
+ActiveRecord::Schema.include(SqliteCrypto::SchemaDefinitions)
+if defined?(ActiveRecord::Schema::Definition)
+  ActiveRecord::Schema::Definition.include(SqliteCrypto::SchemaDefinitions)
+end
 
 # Helper to create test tables
 def create_test_table(table_name = "users", &block)
