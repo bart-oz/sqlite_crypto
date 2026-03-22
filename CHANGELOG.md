@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-03-22
+
+### Added
+- **Auto primary key generation**: Models with UUID or ULID primary keys now automatically generate
+  their primary key on create — no explicit `generates_uuid`/`generates_ulid` call needed
+- `_sqlite_crypto_pk_type` class method for inspecting the detected primary key type (`:uuid`, `:ulid`, or `nil`).
+  Detection is based on column schema (string, limit 36 → `:uuid`; limit 26 → `:ulid`) and is cached per class
+
+### Acknowledgements
+- Thanks to [@joel](https://github.com/joel) for the contribution in [#20](https://github.com/bart-oz/sqlite_crypto/pull/20)
+
 ## [2.0.2] - 2026-02-11
 
 ### Fixed
