@@ -127,9 +127,28 @@ create_table :posts do |t|
 end
 ```
 
-**Model-Level Generation**
+**Automatic Primary Key Generation**
 
-Generate UUIDs or ULIDs for any column:
+When a table uses `id: :uuid` or `id: :ulid`, the gem automatically generates
+primary key values on record creation. No model-level configuration is needed:
+
+```ruby
+# migration
+create_table :users, id: :uuid do |t|
+  t.string :email
+end
+
+# model — no extra code required
+class User < ApplicationRecord
+end
+
+user = User.create!(email: "test@example.com")
+user.id  # => "018d3f91-8f4a-7000-9e7b-4a5c8d2e1f3a"
+```
+
+**Non-Primary-Key Columns**
+
+Generate UUIDs or ULIDs for additional columns with `generates_uuid` / `generates_ulid`:
 
 ```ruby
 class User < ApplicationRecord
