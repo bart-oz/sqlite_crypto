@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_record/connection_adapters/sqlite3_adapter"
+require "sqlite_crypto/id_types"
 
 module SqliteCrypto
   module MigrationHelpers
@@ -21,7 +22,7 @@ module SqliteCrypto
 
         if (primary_key_type = detect_primary_key_type(ref_table))
           options[:type] ||= :string
-          options[:limit] ||= (primary_key_type == :uuid) ? 36 : 26
+          options[:limit] ||= IdTypes.string_limit_for(primary_key_type)
         end
 
         super
@@ -43,10 +44,7 @@ module SqliteCrypto
         pk_column = find_primary_key_column(table_name, conn)
         return nil unless pk_column
 
-        case pk_column.sql_type.downcase
-        when "varchar(36)", "uuid" then :uuid
-        when "varchar(26)", "ulid" then :ulid
-        end
+        IdTypes.type_from_sql_type(pk_column.sql_type)
       end
 
       def find_primary_key_column(table_name, conn)

@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Migration Integration" do
   let(:connection) { ActiveRecord::Base.connection }
   let(:migration_class) {
-    load File.expand_path("../fixtures/example_migration.rb", __dir__)
+    require_relative "../fixtures/example_migration" unless defined?(CreateExampleSchema)
     CreateExampleSchema
   }
 

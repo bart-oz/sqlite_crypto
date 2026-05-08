@@ -1,11 +1,28 @@
-# SQLite Crypto
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/workflows/logo_dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/workflows/logo_light.svg">
+    <img alt="sqlite_crypto logo" src=".github/workflows/logo_light.svg" width="220">
+  </picture>
+</p>
 
-[![Version](https://img.shields.io/badge/version-2.0.2-blue.svg)](https://github.com/bart-oz/sqlite_crypto/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
-[![types supported](https://img.shields.io/badge/types-ULID,_UUIDv7/v4-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)
-[![Coverage](https://img.shields.io/badge/coverage-98.06%25-brightgreen.svg)](https://github.com/bart-oz/sqlite_crypto/actions)
-[![Status](https://img.shields.io/badge/status-active-success.svg)](https://github.com/bart-oz/sqlite_crypto)
+<p align="center">
+  <a href="https://github.com/bart-oz/sqlite_crypto/releases">
+    <img src="https://img.shields.io/badge/version-2.2.0-blue.svg" alt="Version">
+  </a>
+  <a href="LICENSE.txt">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  </a>
+  <a href="https://github.com/bart-oz/sqlite_crypto">
+    <img src="https://img.shields.io/badge/types-ULID,_UUIDv7/v4-brightgreen.svg" alt="Types supported">
+  </a>
+  <a href="https://github.com/bart-oz/sqlite_crypto/actions/workflows/ci.yml">
+    <img src="https://github.com/bart-oz/sqlite_crypto/actions/workflows/ci.yml/badge.svg" alt="Tests">
+  </a>
+  <a href="https://github.com/bart-oz/sqlite_crypto">
+    <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status">
+  </a>
+</p>
 
 ## Overview
 
@@ -24,11 +41,11 @@ end
 - Automatic foreign key type detection
 - Model-level ID generation
 - Clean schema.rb output
-- Zero external dependencies
+- Lightweight runtime dependencies (`rails`, `sqlite3`, `ulid`)
 
 ## Compatibility
 
-**Ruby & Rails:**
+**Ruby & Rails tested in CI:**
 
 |       | Rails 7.1 | Rails 7.2 | Rails 8.0 | Rails 8.1 |
 |-------|-----------|-----------|-----------|-----------|
@@ -37,6 +54,11 @@ end
 | Ruby 3.3 | ✓ | ✓ | ✓ | ✓ |
 | Ruby 3.4 | ✓ | ✓ | ✓ | ✓ |
 | Ruby 4.0 | ✓ | ✓ | ✓ | ✓ |
+
+**Upstream lifecycle note (as of 2026-05-08):**
+- Ruby 3.1 is EOL; Ruby 3.2 is EOL.
+- Rails 7.1 is EOL.
+- Rails 7.2 is security-fixes-only; Rails 8.0 and 8.1 are actively supported.
 
 **UUID Versions:**
 

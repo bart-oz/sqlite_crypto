@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "sqlite_crypto/id_types"
+
 module SqliteCrypto
   module SchemaDumper
     private
@@ -7,11 +9,10 @@ module SqliteCrypto
     def column_spec_for_primary_key(column)
       return super unless column.name == "id" && column.type == :string
 
-      case column.limit
-      when 36 then {id: :uuid}
-      when 26 then {id: :ulid}
-      else super
-      end
+      primary_key_type = IdTypes.type_from_string_limit(column.limit)
+      return super unless primary_key_type
+
+      {id: primary_key_type}
     end
   end
 end
