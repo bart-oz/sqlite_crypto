@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "ulid"
+require "sqlite_crypto/id_types"
 
 module SqliteCrypto
   module ModelExtensions
@@ -62,10 +63,7 @@ module SqliteCrypto
         return nil unless column
         return nil unless column.type == :string
 
-        case column.limit
-        when 36 then :uuid
-        when 26 then :ulid
-        end
+        IdTypes.type_from_string_limit(column.limit)
       rescue ActiveRecord::StatementInvalid
         nil
       end

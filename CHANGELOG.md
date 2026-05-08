@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-05-08
+
+### Added
+- **Theme-aware README logo**: Added dark-mode/light-mode logo switching via `<picture>` in `README.md`
+- **Shared ID type mapping module**: Added `SqliteCrypto::IdTypes` to centralize UUID/ULID limit and type detection logic
+- Unit specs for `SqliteCrypto::IdTypes`
+
+### Changed
+- Refactored schema dumper, migration helpers, model extensions, and SQLite adapter extension to use `SqliteCrypto::IdTypes`
+- Updated `.ruby-version` from `4.0.0` to `4.0.3`
+- Refreshed README badges and compatibility notes
+
+### Fixed
+- Removed repeated migration fixture loading warning by replacing `load` with `require_relative` in migration integration spec
+
 ## [2.1.0] - 2026-03-22
 
 ### Added
