@@ -60,6 +60,17 @@ RSpec.describe "Migration Helpers" do
         expect(author_id_col.sql_type).to eq("varchar(36)")
       end
 
+      it "targets the actual foreign key constraint at to_table, not the pluralized association name" do
+        connection.create_table :posts do |t|
+          t.belongs_to :author, to_table: :users, foreign_key: true
+        end
+
+        foreign_key = connection.foreign_keys(:posts).find { |fk| fk.column == "author_id" }
+
+        expect(foreign_key).not_to be_nil
+        expect(foreign_key.to_table).to eq("users")
+      end
+
       it "allows explicit type override" do
         connection.create_table :posts do |t|
           t.references :user, type: :integer

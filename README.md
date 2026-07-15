@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/bart-oz/sqlite_crypto/releases">
-    <img src="https://img.shields.io/badge/version-2.2.0-blue.svg" alt="Version">
+    <img src="https://img.shields.io/badge/version-2.3.0-blue.svg" alt="Version">
   </a>
   <a href="LICENSE.txt">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
@@ -41,7 +41,7 @@ end
 - Automatic foreign key type detection
 - Model-level ID generation
 - Clean schema.rb output
-- Lightweight runtime dependencies (`rails`, `sqlite3`, `ulid`)
+- Lightweight runtime dependencies (`activerecord`, `railties`, `sqlite3`, `ulid` — no full `rails` metagem)
 
 ## Compatibility
 

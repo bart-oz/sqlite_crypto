@@ -2,7 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "action_text-trix", ">= 2.1.16"
 gem "rails", "~> 7.1.0"
 
 group :development do
