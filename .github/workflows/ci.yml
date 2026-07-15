@@ -25,6 +25,7 @@ jobs:
 
     env:
       RAILS_VERSION: ${{ matrix.rails-version }}
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails-version }}.gemfile
 
     steps:
       - uses: actions/checkout@v4
@@ -33,21 +34,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: false
-
-      - name: Fix gem directory permissions
-        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
-
-      - name: Install dependencies with Rails ${{ matrix.rails-version }}
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-
-      - name: Install specific Rails version appraisal
-        run: bundle exec appraisal rails-${{ matrix.rails-version }} bundle install
+          bundler-cache: true
 
       - name: Run tests
-        run: bundle exec appraisal rails-${{ matrix.rails-version }} rspec
+        run: bundle exec rspec
 
       - name: Upload coverage reports
         if: matrix.ruby-version == '4.0' && matrix.rails-version == '8.1'
@@ -67,13 +57,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: false
-
-      - name: Fix gem directory permissions
-        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
-
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
+          bundler-cache: true
 
       - name: Run linter
         run: bundle exec standardrb
@@ -89,20 +73,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: false
+          bundler-cache: true
 
-      - name: Fix gem directory permissions
-        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
-
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-
+      # SimpleCov enforces minimum_coverage (80%) in-process and fails the run below it
       - name: Run tests with coverage
         run: bundle exec rspec
-
-      - name: Enforce coverage threshold
-        run: |
-          # SimpleCov will exit with status 1 if coverage is below minimum (80%)
 
   security:
     name: Security Audit
@@ -115,19 +90,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-          bundler-cache: false
-
-      - name: Fix gem directory permissions
-        run: chmod -R o-w "$(ruby -e 'puts Gem.dir')"
-
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Install bundle-audit
-        run: gem install bundler-audit
-
-      - name: Update vulnerability database
-        run: bundle-audit update
+          bundler-cache: true
 
       - name: Check for vulnerabilities
-        run: bundle-audit check
+        run: bundle exec bundler-audit check --update
