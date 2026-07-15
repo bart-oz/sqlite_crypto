@@ -277,5 +277,44 @@ RSpec.describe SqliteCrypto::ModelExtensions do
 
       connection.drop_table :pk_cache_test, if_exists: true
     end
+
+    it "recomputes after reset_column_information invalidates the cache" do
+      connection.create_table :pk_reset_test, force: true do |t|
+        t.string :name
+      end
+
+      klass = Class.new(ActiveRecord::Base) do
+        self.table_name = "pk_reset_test"
+      end
+
+      expect(klass._sqlite_crypto_pk_type).to be_nil
+
+      connection.create_table :pk_reset_test, id: :uuid, force: true do |t|
+        t.string :name
+      end
+      klass.reset_column_information
+
+      expect(klass._sqlite_crypto_pk_type).to eq(:uuid)
+
+      connection.drop_table :pk_reset_test, if_exists: true
+    end
+
+    it "returns nil for non-SQLite connections even with a UUID-shaped primary key" do
+      connection.create_table :pk_other_adapter_test, id: :uuid, force: true do |t|
+        t.string :name
+      end
+
+      klass = Class.new(ActiveRecord::Base) do
+        self.table_name = "pk_other_adapter_test"
+      end
+
+      other_connection = instance_double(ActiveRecord::ConnectionAdapters::AbstractAdapter, adapter_name: "PostgreSQL")
+      allow(klass).to receive(:connection).and_return(other_connection)
+      allow(klass).to receive(:table_exists?).and_return(true)
+
+      expect(klass._sqlite_crypto_pk_type).to be_nil
+
+      connection.drop_table :pk_other_adapter_test, if_exists: true
+    end
   end
 end

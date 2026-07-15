@@ -18,11 +18,17 @@ module SqliteCrypto
     module References
       def references(*args, **options)
         ref_name = args.first
-        ref_table = options.delete(:to_table) || ref_name.to_s.pluralize
+        explicit_to_table = options.delete(:to_table)
+        ref_table = explicit_to_table || ref_name.to_s.pluralize
 
         if (primary_key_type = detect_primary_key_type(ref_table))
           options[:type] ||= :string
           options[:limit] ||= IdTypes.string_limit_for(primary_key_type)
+        end
+
+        if explicit_to_table && options[:foreign_key]
+          fk_options = options[:foreign_key].is_a?(Hash) ? options[:foreign_key] : {}
+          options[:foreign_key] = fk_options.reverse_merge(to_table: explicit_to_table)
         end
 
         super

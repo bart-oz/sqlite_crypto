@@ -47,6 +47,14 @@ RSpec.describe SqliteCrypto::Type::ULID do
       end
     end
 
+    it "rejects Crockford base32 excluded letters I, L, O, U" do
+      %w[I L O U].each do |excluded_letter|
+        invalid = valid_ulid.dup
+        invalid[1] = excluded_letter
+        expect { type.cast(invalid) }.to raise_error(ArgumentError, /Invalid ULID/)
+      end
+    end
+
     it "rejects multiline strings with embedded newlines (security)" do
       malicious = "01ARZ3NDEKTSV4RRFFQ69G5FAV\n<script>alert('xss')</script>"
       expect { type.cast(malicious) }.to raise_error(ArgumentError, /Invalid ULID/)
@@ -73,6 +81,15 @@ RSpec.describe SqliteCrypto::Type::ULID do
       expect(type.serialize(nil)).to be_nil
       expect(type.deserialize(nil)).to be_nil
     end
+
+    it "does not raise for malformed values already stored in the database" do
+      legacy_value = "not-a-ulid"
+      expect(type.deserialize(legacy_value)).to eq(legacy_value)
+    end
+
+    it "still raises ArgumentError when writing an invalid value" do
+      expect { type.serialize("not-a-ulid") }.to raise_error(ArgumentError, /Invalid ULID/)
+    end
   end
 
   describe "#changed_in_place?" do
@@ -83,6 +100,11 @@ RSpec.describe SqliteCrypto::Type::ULID do
       expect(type.changed_in_place?(ulid1, ulid1)).to be false
       expect(type.changed_in_place?(ulid1, ulid2)).to be true
       expect(type.changed_in_place?(nil, ulid1)).to be true
+    end
+
+    it "does not raise when the persisted value is a malformed legacy id" do
+      expect(type.changed_in_place?("not-a-ulid", valid_ulid)).to be true
+      expect(type.changed_in_place?("not-a-ulid", nil)).to be true
     end
   end
 end

@@ -4,8 +4,7 @@ module SqliteCrypto
   module Type
     class Base < ActiveRecord::Type::String
       def deserialize(value)
-        return if value.nil?
-        cast(value)
+        value&.to_s
       end
 
       def cast(value)
@@ -25,7 +24,7 @@ module SqliteCrypto
       end
 
       def changed_in_place?(raw_old_value, new_value)
-        cast(raw_old_value) != cast(new_value)
+        deserialize(raw_old_value) != cast(new_value)
       end
 
       private

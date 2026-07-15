@@ -66,6 +66,15 @@ RSpec.describe SqliteCrypto::Type::Uuid do
       expect(type.serialize(nil)).to be_nil
       expect(type.deserialize(nil)).to be_nil
     end
+
+    it "does not raise for malformed values already stored in the database" do
+      legacy_value = "not-a-uuid"
+      expect(type.deserialize(legacy_value)).to eq(legacy_value)
+    end
+
+    it "still raises ArgumentError when writing an invalid value" do
+      expect { type.serialize("not-a-uuid") }.to raise_error(ArgumentError, /Invalid UUID/)
+    end
   end
 
   describe "#changed_in_place?" do
@@ -76,6 +85,11 @@ RSpec.describe SqliteCrypto::Type::Uuid do
       expect(type.changed_in_place?(uuid1, uuid1)).to be false
       expect(type.changed_in_place?(uuid1, uuid2)).to be true
       expect(type.changed_in_place?(nil, uuid1)).to be true
+    end
+
+    it "does not raise when the persisted value is a malformed legacy id" do
+      expect(type.changed_in_place?("not-a-uuid", valid_uuid)).to be true
+      expect(type.changed_in_place?("not-a-uuid", nil)).to be true
     end
   end
 end

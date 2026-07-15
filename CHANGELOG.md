@@ -5,13 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.3.0] - 2026-07-15
+
+### Security
+- Refreshed lockfiles, picking up fixes for transitive CVEs in `sqlite3`, `nokogiri`, `json`, `crass`, and `concurrent-ruby`
 
 ### Changed
 - Updated `.ruby-version` from `4.0.3` to `4.0.6`
-- CI: switched to `bundler-cache: true` with per-Rails `BUNDLE_GEMFILE`, replacing manual `bundle install` + `appraisal` invocations for faster runs
-- CI: security audit now uses the bundled `bundler-audit` (`bundle exec bundler-audit check --update`) instead of a separate gem install
-- CI: removed the empty "Enforce coverage threshold" step (SimpleCov enforces the 80% minimum in-process)
+- CI: cache bundler installs per Rails version, run `bundler-audit` from the bundle, and drop the empty coverage-threshold step
+- Narrowed the runtime dependency from `rails` to `activerecord` + `railties`, dropping the `action_text-trix` pin it required
+- **Tightened ULID validation**: rejects `I`, `L`, `O`, `U`, which Crockford base32 excludes
+
+### Fixed
+- **Reads no longer raise on malformed legacy IDs**: `Type::Base#deserialize` returns stored values as-is instead of re-validating them, so a corrupted row no longer crashes every read of it. Writes (`#cast`/`#serialize`) still validate strictly
+- **Primary-key type cache invalidation**: `_sqlite_crypto_pk_type` now clears on `reset_column_information` instead of going stale after a migration
+- **Adapter guard for auto ID generation**: primary-key detection now only applies to SQLite3 connections, not any string(36/26) primary key regardless of adapter
+- **`references`/`belongs_to` with `to_table` and `foreign_key: true`**: the foreign key now targets the correct table instead of the pluralized association name
 
 ## [2.2.0] - 2026-05-08
 

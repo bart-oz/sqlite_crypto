@@ -50,11 +50,17 @@ module SqliteCrypto
         @_sqlite_crypto_pk_type = _detect_sqlite_crypto_pk_type
       end
 
+      def reset_column_information
+        remove_instance_variable(:@_sqlite_crypto_pk_type) if defined?(@_sqlite_crypto_pk_type)
+        super
+      end
+
       private
 
       def _detect_sqlite_crypto_pk_type
         return nil if abstract_class?
         return nil unless table_exists?
+        return nil unless connection.adapter_name == "SQLite"
 
         pk = primary_key
         return nil unless pk
