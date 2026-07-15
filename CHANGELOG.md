@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Updated `.ruby-version` from `4.0.3` to `4.0.6`
+- CI: switched to `bundler-cache: true` with per-Rails `BUNDLE_GEMFILE`, replacing manual `bundle install` + `appraisal` invocations for faster runs
+- CI: security audit now uses the bundled `bundler-audit` (`bundle exec bundler-audit check --update`) instead of a separate gem install
+- CI: removed the empty "Enforce coverage threshold" step (SimpleCov enforces the 80% minimum in-process)
+
 ## [2.2.0] - 2026-05-08
 
 ### Added

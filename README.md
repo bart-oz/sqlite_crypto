@@ -55,8 +55,8 @@ end
 | Ruby 3.4 | ✓ | ✓ | ✓ | ✓ |
 | Ruby 4.0 | ✓ | ✓ | ✓ | ✓ |
 
-**Upstream lifecycle note (as of 2026-05-08):**
-- Ruby 3.1 is EOL; Ruby 3.2 is EOL.
+**Upstream lifecycle note (as of 2026-07-15):**
+- Ruby 3.1 is EOL; Ruby 3.2 is EOL. Latest stable Ruby is 4.0.6.
 - Rails 7.1 is EOL.
 - Rails 7.2 is security-fixes-only; Rails 8.0 and 8.1 are actively supported.
 
